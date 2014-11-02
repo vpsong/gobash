@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shell</title>
+  <style type="text/css">
+  * {
+    color: white;
+    background-color: black;
+    border: none;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="current">
+    <span>root#</span>
+    <span id="typed"></span>
+    <span class="cursor">▎</span>
+  </div>
+</body>
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script>
+  function run() {
+    var html = "<div><span>root# " + $("#typed").text() + "</span></div>";
+    $("#current").before(html);
+    $("#typed").text("");
+  }
+</script>
+<script>
+$(function() {
+  setInterval('$(".cursor").toggle()', 600);
+  $(document).keydown(function(event){
+    if(event.which == 8) {
+      $("#typed").text($("#typed").text().substr(0, $("#typed").text().length-1));
+      return false;
+    }
+    if(event.which == 13) {
+      run();
+      return false;
+    }
+    $("#typed").append(String.fromCharCode(event.which));
+  });
+});
+</script>
+</html>
